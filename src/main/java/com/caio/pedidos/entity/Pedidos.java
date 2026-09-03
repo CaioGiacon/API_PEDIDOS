@@ -29,7 +29,7 @@ public class Pedidos {
     @Column(name = "valor-unitario")
     private int valorUnitario;
     @Column(name = "valor-total")
-    private int valorTotal;
+    private double valorTotal;
     @Column(name = "status")
     private String status;
     @CreationTimestamp
