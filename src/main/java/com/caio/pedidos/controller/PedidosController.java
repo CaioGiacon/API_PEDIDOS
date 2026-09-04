@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/pedidos")
 public class PedidosController {
@@ -45,5 +47,25 @@ public class PedidosController {
                 pedido.getStatus()
         );
         return ResponseEntity.ok(responseDTO);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<PedidosResponseDTO>> listarPedidos() {
+
+        List<Pedidos> pedidos = pedidosService.listarPedido();
+
+        List<PedidosResponseDTO> responseDTOs = pedidos.stream()
+                .map(pedido -> new PedidosResponseDTO(
+                        pedido.getId(),
+                        pedido.getCliente(),
+                        pedido.getProduto(),
+                        pedido.getQuantidade(),
+                        pedido.getValorUnitario(),
+                        pedido.getValorTotal(),
+                        pedido.getStatus()
+                ))
+                .toList();
+
+        return ResponseEntity.ok(responseDTOs);
     }
 }

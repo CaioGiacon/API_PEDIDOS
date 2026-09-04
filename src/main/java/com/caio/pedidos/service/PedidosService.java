@@ -18,7 +18,7 @@ public class PedidosService {
         calcularValorTotal(pedido);
 
         if (pedido.getStatus() == null || pedido.getStatus().isBlank()) {
-            pedido.setStatus("PENDENTE");
+            pedido.setStatus("CRIADO");
         }
         return pedidosRepository.save(pedido);
     }
