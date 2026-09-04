@@ -23,9 +23,15 @@ public class PedidosService {
         return pedidosRepository.save(pedido);
     }
 
+    public Pedidos buscarPorId(Long id) {
+        return pedidosRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Pedido não encontrado com o ID: " + id));
+    }
+
     public List<Pedidos> listarPedido() {
         return pedidosRepository.findAll();
     }
+
     public Pedidos atualizarPedido(Long id, Pedidos pedidoAtualizado) {
         return pedidosRepository.findById(id).map(pedidoExistente -> {
             pedidoExistente.setCliente(pedidoAtualizado.getCliente());
