@@ -33,9 +33,11 @@ public class PedidosService {
     }
 
     public Pedidos atualizarStatus(Long id, String novoStatus) {
-        Pedidos pedidoExistente = buscarPorId(id);
-        pedidoExistente.setStatus(novoStatus);
 
+        Pedidos pedidoExistente = pedidosRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Pedido inexistente"));
+
+        pedidoExistente.setStatus(novoStatus);
         return pedidosRepository.save(pedidoExistente);
     }
 
