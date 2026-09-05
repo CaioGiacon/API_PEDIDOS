@@ -2,6 +2,7 @@ package com.caio.pedidos.controller;
 
 import com.caio.pedidos.dto.PedidosRequestDTO;
 import com.caio.pedidos.dto.PedidosResponseDTO;
+import com.caio.pedidos.dto.StatusRequestDTO;
 import com.caio.pedidos.entity.Pedidos;
 import com.caio.pedidos.service.PedidosService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,5 +68,22 @@ public class PedidosController {
                 .toList();
 
         return ResponseEntity.ok(responseDTOs);
+    }
+
+    @PatchMapping("/{id}/status")
+    public ResponseEntity<PedidosResponseDTO> alterarStatus(@PathVariable Long id, @RequestBody StatusRequestDTO dto) {
+
+        Pedidos pedidoAtualizado = pedidosService.atualizarStatus(id, dto.status());
+
+        PedidosResponseDTO responseDTO = new PedidosResponseDTO(
+                pedidoAtualizado.getId(),
+                pedidoAtualizado.getCliente(),
+                pedidoAtualizado.getProduto(),
+                pedidoAtualizado.getQuantidade(),
+                pedidoAtualizado.getValorUnitario(),
+                pedidoAtualizado.getValorTotal(),
+                pedidoAtualizado.getStatus()
+        );
+        return ResponseEntity.ok(responseDTO);
     }
 }
