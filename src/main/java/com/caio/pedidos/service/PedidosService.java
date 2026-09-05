@@ -32,18 +32,11 @@ public class PedidosService {
         return pedidosRepository.findAll();
     }
 
-    public Pedidos atualizarPedido(Long id, Pedidos pedidoAtualizado) {
-        return pedidosRepository.findById(id).map(pedidoExistente -> {
-            pedidoExistente.setCliente(pedidoAtualizado.getCliente());
-            pedidoExistente.setProduto(pedidoAtualizado.getProduto());
-            pedidoExistente.setQuantidade(pedidoAtualizado.getQuantidade());
-            pedidoExistente.setValorUnitario(pedidoAtualizado.getValorUnitario());
-            pedidoExistente.setStatus(pedidoAtualizado.getStatus());
+    public Pedidos atualizarStatus(Long id, String novoStatus) {
+        Pedidos pedidoExistente = buscarPorId(id);
+        pedidoExistente.setStatus(novoStatus);
 
-            calcularValorTotal(pedidoExistente);
-
-            return pedidosRepository.save(pedidoExistente);
-        }).orElseThrow(() -> new ResourceNotFoundException("Pedido não encontrado com o ID: " + id));
+        return pedidosRepository.save(pedidoExistente);
     }
 
     public void deletarPedido(Long id) {
