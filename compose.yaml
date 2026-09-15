@@ -3,7 +3,7 @@ version: '3.8'
 services:
   db:
     image: postgres:15-alpine
-    container_name: postgres_pedidos
+    container_name: postgres
     restart: always
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
@@ -17,7 +17,7 @@ services:
       - pedidos_network
   api:
     build: .
-    container_name: api_pedidos
+    container_name: pedidos
     restart: always
     ports:
       - "8000:8080"
